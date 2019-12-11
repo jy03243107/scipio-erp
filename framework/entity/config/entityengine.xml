@@ -22,9 +22,9 @@ under the License.
 access. For a detailed description see the core/docs/entityconfig.html file.
 -->
 <entity-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entity-config.xsd">
+               xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entity-config.xsd">
     <resource-loader name="fieldfile" class="org.ofbiz.base.config.FileLoader"
-            prepend-env="ofbiz.home" prefix="/framework/entity/fieldtype/"/>
+                     prepend-env="ofbiz.home" prefix="/framework/entity/fieldtype/"/>
 
     <!-- the transaction factory class to use, one is needed for each way of getting JTA interfaces -->
     <!-- Use this one for Geronimo -->
@@ -50,25 +50,25 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     <connection-factory class="org.ofbiz.entity.connection.DBCPConnectionFactory"/>
 
     <debug-xa-resources value="false" />  <!-- see https://issues.apache.org/jira/browse/OFBIZ-4282 for more -->
-    
+
     <delegator name="default" entity-model-reader="main" entity-group-reader="main" entity-eca-reader="main" distributed-cache-clear-enabled="false">
-        <group-map group-name="org.ofbiz" datasource-name="localderby"/>
-        <group-map group-name="org.ofbiz.olap" datasource-name="localderbyolap"/>
-        <group-map group-name="org.ofbiz.tenant" datasource-name="localderbytenant"/>
+        <group-map group-name="org.ofbiz" datasource-name="localmysql"/>
+        <group-map group-name="org.ofbiz.olap" datasource-name="localmysqlolap"/>
+        <group-map group-name="org.ofbiz.tenant" datasource-name="localmysqltenant"/>
     </delegator>
     <delegator name="default-no-eca" entity-model-reader="main" entity-group-reader="main" entity-eca-reader="main" entity-eca-enabled="false" distributed-cache-clear-enabled="false">
-        <group-map group-name="org.ofbiz" datasource-name="localderby"/>
-        <group-map group-name="org.ofbiz.olap" datasource-name="localderbyolap"/>
-        <group-map group-name="org.ofbiz.tenant" datasource-name="localderbytenant"/>
+        <group-map group-name="org.ofbiz" datasource-name="localmysql"/>
+        <group-map group-name="org.ofbiz.olap" datasource-name="localmysqlolap"/>
+        <group-map group-name="org.ofbiz.tenant" datasource-name="localmysqltenant"/>
     </delegator>
 
     <!-- be sure that your default delegator (or the one you use) uses the same datasource for test. You must run "ant load-demo" before running "ant run-tests" -->
     <delegator name="test" entity-model-reader="main" entity-group-reader="main" entity-eca-reader="main">
-        <group-map group-name="org.ofbiz" datasource-name="localderby"/>
-        <group-map group-name="org.ofbiz.olap" datasource-name="localderbyolap"/>
-        <group-map group-name="org.ofbiz.tenant" datasource-name="localderbytenant"/>
+        <group-map group-name="org.ofbiz" datasource-name="localmysql"/>
+        <group-map group-name="org.ofbiz.olap" datasource-name="localmysqlolap"/>
+        <group-map group-name="org.ofbiz.tenant" datasource-name="localmysqltenant"/>
     </delegator>
-   
+
     <!-- need to at least define a name for each component to use -->
     <entity-model-reader name="main"/>
 
@@ -107,7 +107,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     <field-type name="mssql" loader="fieldfile" location="fieldtypemssql.xml"/>
     <field-type name="advantage" loader="fieldfile" location="fieldtypeadvantage.xml"/>
     <field-type name="mariadb" loader="fieldfile" location="fieldtypemariadb.xml"/>
-    
+
     <!--
     For DAO/JDBC Helper: Tries:
       1. JNDI Datasource IF jdbc.jndi.name, context.provider, etc are specified
@@ -123,16 +123,16 @@ access. For a detailed description see the core/docs/entityconfig.html file.
      * Not set uses database default
     -->
     <datasource name="localhsql"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            field-type-name="hsql"
-            check-on-start="true"
-            add-missing-on-start="true"
-            check-indices-on-start="true"
-            use-foreign-keys="true"
-            use-foreign-key-indices="true"
-            use-fk-initially-deferred="false"
-            join-style="ansi-no-parenthesis"
-            alias-view-columns="true">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                field-type-name="hsql"
+                check-on-start="true"
+                add-missing-on-start="true"
+                check-indices-on-start="true"
+                use-foreign-keys="true"
+                use-foreign-key-indices="true"
+                use-fk-initially-deferred="false"
+                join-style="ansi-no-parenthesis"
+                alias-view-columns="true">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -155,16 +155,16 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     </datasource>
 
     <datasource name="localderby"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="OFBIZ"
-            field-type-name="derby"
-            check-on-start="true"
-            add-missing-on-start="true"
-            use-pk-constraint-names="false"
-            use-indices-unique="false"
-            alias-view-columns="false"
-            use-order-by-nulls="true"
-            offset-style="fetch">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="OFBIZ"
+                field-type-name="derby"
+                check-on-start="true"
+                add-missing-on-start="true"
+                use-pk-constraint-names="false"
+                use-indices-unique="false"
+                alias-view-columns="false"
+                use-order-by-nulls="true"
+                offset-style="fetch">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -188,38 +188,38 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <!-- <jndi-jdbc jndi-server-name="localjndi" jndi-name="java:/DerbyDataSource" isolation-level="ReadCommitted"/> -->
     </datasource>
     <datasource name="localderbyodbc"
-        helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-        schema-name="OFBIZ"
-        field-type-name="derby"
-        check-on-start="true"
-        add-missing-on-start="true"
-        use-pk-constraint-names="false"
-        use-indices-unique="false"
-        alias-view-columns="false"
-        use-order-by-nulls="true"
-        offset-style="fetch">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="OFBIZ"
+                field-type-name="derby"
+                check-on-start="true"
+                add-missing-on-start="true"
+                use-pk-constraint-names="false"
+                use-indices-unique="false"
+                alias-view-columns="false"
+                use-order-by-nulls="true"
+                offset-style="fetch">
         <!-- beware use-indices-unique="false" is needed because of Derby bug with null values in a unique index -->
         <inline-jdbc
-            jdbc-driver="org.apache.derby.jdbc.EmbeddedDriver"
-            jdbc-uri="jdbc:derby:ofbizodbc;create=true"
-            jdbc-username="ofbiz"
-            jdbc-password-lookup="derby-ofbizodbc"
-            isolation-level="ReadCommitted"
-            pool-minsize="2"
-            pool-maxsize="100"
+                jdbc-driver="org.apache.derby.jdbc.EmbeddedDriver"
+                jdbc-uri="jdbc:derby:ofbizodbc;create=true"
+                jdbc-username="ofbiz"
+                jdbc-password-lookup="derby-ofbizodbc"
+                isolation-level="ReadCommitted"
+                pool-minsize="2"
+                pool-maxsize="100"
                 time-between-eviction-runs-millis="600000"/>
         <!-- <jndi-jdbc jndi-server-name="localjndi" jndi-name="java:/DerbyDataSource" isolation-level="ReadCommitted"/> -->
     </datasource>
     <datasource name="localderbyolap"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="OFBIZ"
-            field-type-name="derby"
-            check-on-start="true"
-            add-missing-on-start="true"
-            use-pk-constraint-names="false"
-            use-indices-unique="false"
-            alias-view-columns="false"
-            use-order-by-nulls="true">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="OFBIZ"
+                field-type-name="derby"
+                check-on-start="true"
+                add-missing-on-start="true"
+                use-pk-constraint-names="false"
+                use-indices-unique="false"
+                alias-view-columns="false"
+                use-order-by-nulls="true">
         <!-- beware use-indices-unique="false" is needed because of Derby bug with null values in a unique index -->
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
@@ -240,15 +240,15 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <!-- <jndi-jdbc jndi-server-name="localjndi" jndi-name="java:/DerbyDataSource" isolation-level="ReadCommitted"/> -->
     </datasource>
     <datasource name="localderbytenant"
-        helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-        schema-name="OFBIZ"
-        field-type-name="derby"
-        check-on-start="true"
-        add-missing-on-start="true"
-        use-pk-constraint-names="false"
-        use-indices-unique="false"
-        alias-view-columns="false"
-        use-order-by-nulls="true">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="OFBIZ"
+                field-type-name="derby"
+                check-on-start="true"
+                add-missing-on-start="true"
+                use-pk-constraint-names="false"
+                use-indices-unique="false"
+                alias-view-columns="false"
+                use-order-by-nulls="true">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -258,34 +258,34 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <read-data reader-name="ext-demo"/>
         <!-- beware use-indices-unique="false" is needed because of Derby bug with null values in a unique index -->
         <inline-jdbc
-            jdbc-driver="org.apache.derby.jdbc.EmbeddedDriver"
-            jdbc-uri="jdbc:derby:ofbiztenant;create=true"
-            jdbc-username="ofbiz"
-            jdbc-password-lookup="derby-ofbiztenant"
-            isolation-level="ReadCommitted"
-            pool-minsize="2"
-            pool-maxsize="100"
-            time-between-eviction-runs-millis="600000"/>
+                jdbc-driver="org.apache.derby.jdbc.EmbeddedDriver"
+                jdbc-uri="jdbc:derby:ofbiztenant;create=true"
+                jdbc-username="ofbiz"
+                jdbc-password-lookup="derby-ofbiztenant"
+                isolation-level="ReadCommitted"
+                pool-minsize="2"
+                pool-maxsize="100"
+                time-between-eviction-runs-millis="600000"/>
         <!-- <jndi-jdbc jndi-server-name="localjndi" jndi-name="java:/DerbyDataSource" isolation-level="ReadCommitted"/> -->
     </datasource>
-    
+
     <!-- SCIPIO: 2018-06-05: Removed Axion DB support -->
 
     <!-- SCIPIO: 2018-06-05: Removed Daffodil DB support -->
 
     <datasource name="localmysql"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            field-type-name="mysql"
-            check-on-start="true"
-            add-missing-on-start="true"
-            check-pks-on-start="false"
-            use-foreign-keys="true"
-            join-style="ansi-no-parenthesis"
-            alias-view-columns="false"
-            drop-fk-use-foreign-key-keyword="true"
-            table-type="InnoDB"
-            character-set="utf8mb4"
-            collate="utf8mb4_col"><!-- SCIPIO: Set to UTF8 for compatibility with UTF8 datasets -->
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                field-type-name="mysql"
+                check-on-start="true"
+                add-missing-on-start="true"
+                check-pks-on-start="false"
+                use-foreign-keys="true"
+                join-style="ansi-no-parenthesis"
+                alias-view-columns="false"
+                drop-fk-use-foreign-key-keyword="true"
+                table-type="InnoDB"
+                character-set="utf8"
+                collate="utf8_general_ci"><!-- SCIPIO: Set to UTF8 for compatibility with UTF8 datasets -->
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -296,8 +296,8 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <inline-jdbc
                 jdbc-driver="com.mysql.jdbc.Driver"
                 jdbc-uri="jdbc:mysql://127.0.0.1/ofbiz?autoReconnect=true"
-                jdbc-username="ofbiz"
-                jdbc-password="ofbiz"
+                jdbc-username="root"
+                jdbc-password="123456"
                 isolation-level="ReadCommitted"
                 pool-minsize="2"
                 pool-maxsize="100"
@@ -307,18 +307,18 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <!-- <jndi-jdbc jndi-server-name="localjndi" jndi-name="java:/MySqlDataSource" isolation-level="Serializable"/> -->
     </datasource>
     <datasource name="localmysqlolap"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            field-type-name="mysql"
-            check-on-start="true"
-            add-missing-on-start="true"
-            check-pks-on-start="false"
-            use-foreign-keys="true"
-            join-style="ansi-no-parenthesis"
-            alias-view-columns="false"
-            drop-fk-use-foreign-key-keyword="true"
-            table-type="InnoDB"
-            character-set="latin1"
-            collate="latin1_general_cs">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                field-type-name="mysql"
+                check-on-start="true"
+                add-missing-on-start="true"
+                check-pks-on-start="false"
+                use-foreign-keys="true"
+                join-style="ansi-no-parenthesis"
+                alias-view-columns="false"
+                drop-fk-use-foreign-key-keyword="true"
+                table-type="InnoDB"
+                character-set="utf8"
+                collate="utf8_general_ci">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -329,8 +329,8 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <inline-jdbc
                 jdbc-driver="com.mysql.jdbc.Driver"
                 jdbc-uri="jdbc:mysql://127.0.0.1/ofbizolap?autoReconnect=true"
-                jdbc-username="ofbiz"
-                jdbc-password="ofbiz"
+                jdbc-username="root"
+                jdbc-password="123456"
                 isolation-level="ReadCommitted"
                 pool-minsize="2"
                 pool-maxsize="100"
@@ -340,18 +340,18 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <!-- <jndi-jdbc jndi-server-name="localjndi" jndi-name="java:/MySqlDataSource" isolation-level="Serializable"/> -->
     </datasource>
     <datasource name="localmysqltenant"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            field-type-name="mysql"
-            check-on-start="true"
-            add-missing-on-start="true"
-            check-pks-on-start="false"
-            use-foreign-keys="true"
-            join-style="ansi-no-parenthesis"
-            alias-view-columns="false"
-            drop-fk-use-foreign-key-keyword="true"
-            table-type="InnoDB"
-            character-set="latin1"
-            collate="latin1_general_cs">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                field-type-name="mysql"
+                check-on-start="true"
+                add-missing-on-start="true"
+                check-pks-on-start="false"
+                use-foreign-keys="true"
+                join-style="ansi-no-parenthesis"
+                alias-view-columns="false"
+                drop-fk-use-foreign-key-keyword="true"
+                table-type="InnoDB"
+                character-set="utf8"
+                collate="utf8_general_ci">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -362,8 +362,8 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <inline-jdbc
                 jdbc-driver="com.mysql.jdbc.Driver"
                 jdbc-uri="jdbc:mysql://127.0.0.1/ofbiztenant?autoReconnect=true"
-                jdbc-username="ofbiz"
-                jdbc-password="ofbiz"
+                jdbc-username="root"
+                jdbc-password="123456"
                 isolation-level="ReadCommitted"
                 pool-minsize="2"
                 pool-maxsize="100"
@@ -373,25 +373,25 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <!-- <jndi-jdbc jndi-server-name="localjndi" jndi-name="java:/MySqlDataSource" isolation-level="Serializable"/> -->
     </datasource>
     <datasource name="odbcmysql"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            field-type-name="mysql"
-            check-on-start="true"
-            add-missing-on-start="true"
-            check-pks-on-start="false"
-            use-foreign-keys="true"
-            join-style="ansi-no-parenthesis"
-            alias-view-columns="false"
-            drop-fk-use-foreign-key-keyword="true"
-            table-type="InnoDB"
-            character-set="latin1"
-            collate="latin1_general_cs">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                field-type-name="mysql"
+                check-on-start="true"
+                add-missing-on-start="true"
+                check-pks-on-start="false"
+                use-foreign-keys="true"
+                join-style="ansi-no-parenthesis"
+                alias-view-columns="false"
+                drop-fk-use-foreign-key-keyword="true"
+                table-type="InnoDB"
+                character-set="utf8"
+                collate="utf8_general_ci">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <inline-jdbc
                 jdbc-driver="com.mysql.jdbc.Driver"
                 jdbc-uri="jdbc:mysql://127.0.0.1/ofbiz_odbc?autoReconnect=true"
-                jdbc-username="ofbiz"
-                jdbc-password="ofbiz"
+                jdbc-username="root"
+                jdbc-password="123456"
                 isolation-level="ReadCommitted"
                 pool-minsize="2"
                 pool-maxsize="100"
@@ -400,19 +400,19 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     </datasource>
 
     <datasource name="localpostgres"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="public"
-            field-type-name="postgres"
-            check-on-start="true"
-            add-missing-on-start="true"
-            use-fk-initially-deferred="false"
-            alias-view-columns="false"
-            join-style="ansi"
-            use-binary-type-for-blob="true"
-            use-order-by-nulls="true"
-            result-fetch-size="50"> <!-- Comment out the result-fetch-size attribute for jdbc driver versions older than 8.0.
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="public"
+                field-type-name="postgres"
+                check-on-start="true"
+                add-missing-on-start="true"
+                use-fk-initially-deferred="false"
+                alias-view-columns="false"
+                join-style="ansi"
+                use-binary-type-for-blob="true"
+                use-order-by-nulls="true"
+                result-fetch-size="50"> <!-- Comment out the result-fetch-size attribute for jdbc driver versions older than 8.0.
             Not recommended to use those though. They are archived unsupported versions: http://jdbc.postgresql.org/download.html -->
-        
+
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -438,19 +438,19 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <!-- <tyrex-dataSource dataSource-name="localpostgres" isolation-level="ReadCommitted"/> -->
     </datasource>
 
-    
+
     <datasource name="localpostolap"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="public"
-            field-type-name="postgres"
-            check-on-start="true"
-            add-missing-on-start="true"
-            use-fk-initially-deferred="false"
-            alias-view-columns="false"
-            join-style="ansi"
-            result-fetch-size="50"
-            use-binary-type-for-blob="true"
-            use-order-by-nulls="true">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="public"
+                field-type-name="postgres"
+                check-on-start="true"
+                add-missing-on-start="true"
+                use-fk-initially-deferred="false"
+                alias-view-columns="false"
+                join-style="ansi"
+                result-fetch-size="50"
+                use-binary-type-for-blob="true"
+                use-order-by-nulls="true">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -468,26 +468,26 @@ access. For a detailed description see the core/docs/entityconfig.html file.
                 pool-maxsize="100"
                 time-between-eviction-runs-millis="600000"/><!-- Be warned that at this date (2009-09-20) the max_connections parameters in postgresql.conf
                     is set by default to 100 by the initdb process see http://www.postgresql.org/docs/8.4/static/runtime-config-connection.html#GUC-MAX-CONNECTIONS-->
-        
+
         <!-- <jndi-jdbc jndi-server-name="default" jndi-name="java:comp/env/jdbc/localpostgres" isolation-level="ReadCommitted"/>-->
         <!-- <jndi-jdbc jndi-server-name="default" jndi-name="comp/env/jdbc/xa/localpostgres" isolation-level="ReadCommitted"/> --> <!-- Orion Style JNDI name -->
         <!-- <jndi-jdbc jndi-server-name="localweblogic" jndi-name="PostgresDataSource"/> --> <!-- Weblogic Style JNDI name -->
         <!-- <jndi-jdbc jndi-server-name="default" jndi-name="jdbc/localpostgres" isolation-level="ReadCommitted"/> --> <!-- JRun4 Style JNDI name -->
         <!-- <tyrex-dataSource dataSource-name="localpostgres" isolation-level="ReadCommitted"/> -->
     </datasource>
-    
+
     <datasource name="localposttenant"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="public"
-            field-type-name="postgres"
-            check-on-start="true"
-            add-missing-on-start="true"
-            use-fk-initially-deferred="false"
-            alias-view-columns="false"
-            join-style="ansi"
-            result-fetch-size="50"
-            use-binary-type-for-blob="true"
-            use-order-by-nulls="true">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="public"
+                field-type-name="postgres"
+                check-on-start="true"
+                add-missing-on-start="true"
+                use-fk-initially-deferred="false"
+                alias-view-columns="false"
+                join-style="ansi"
+                result-fetch-size="50"
+                use-binary-type-for-blob="true"
+                use-order-by-nulls="true">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -505,7 +505,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
                 pool-maxsize="100"
                 time-between-eviction-runs-millis="600000"/><!-- Be warned that at this date (2009-09-20) the max_connections parameters in postgresql.conf
                     is set by default to 100 by the initdb process see http://www.postgresql.org/docs/8.4/static/runtime-config-connection.html#GUC-MAX-CONNECTIONS-->
-        
+
         <!-- <jndi-jdbc jndi-server-name="default" jndi-name="java:comp/env/jdbc/localpostgres" isolation-level="ReadCommitted"/>-->
         <!-- <jndi-jdbc jndi-server-name="default" jndi-name="comp/env/jdbc/xa/localpostgres" isolation-level="ReadCommitted"/> --> <!-- Orion Style JNDI name -->
         <!-- <jndi-jdbc jndi-server-name="localweblogic" jndi-name="PostgresDataSource"/> --> <!-- Weblogic Style JNDI name -->
@@ -519,19 +519,19 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         WARN: The fields for localpostnew are inconsistent with all other datasource databases, and data logic could be affected!
             Use at your own risk. May be removed in a future version (if further incorporated). -->
     <datasource name="localpostnew"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="public"
-            field-type-name="postnew"
-            check-on-start="true"
-            add-missing-on-start="true"
-            use-fk-initially-deferred="false"
-            alias-view-columns="false"
-            join-style="ansi"
-            use-binary-type-for-blob="true"
-            use-order-by-nulls="true"
-            result-fetch-size="50"> <!-- Comment out the result-fetch-size attribute for jdbc driver versions older than 8.0.
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="public"
+                field-type-name="postnew"
+                check-on-start="true"
+                add-missing-on-start="true"
+                use-fk-initially-deferred="false"
+                alias-view-columns="false"
+                join-style="ansi"
+                use-binary-type-for-blob="true"
+                use-order-by-nulls="true"
+                result-fetch-size="50"> <!-- Comment out the result-fetch-size attribute for jdbc driver versions older than 8.0.
             Not recommended to use those though. They are archived unsupported versions: http://jdbc.postgresql.org/download.html -->
-        
+
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -558,17 +558,17 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     </datasource>
 
     <datasource name="localpostolapnew"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="public"
-            field-type-name="postnew"
-            check-on-start="true"
-            add-missing-on-start="true"
-            use-fk-initially-deferred="false"
-            alias-view-columns="false"
-            join-style="ansi"
-            result-fetch-size="50"
-            use-binary-type-for-blob="true"
-            use-order-by-nulls="true">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="public"
+                field-type-name="postnew"
+                check-on-start="true"
+                add-missing-on-start="true"
+                use-fk-initially-deferred="false"
+                alias-view-columns="false"
+                join-style="ansi"
+                result-fetch-size="50"
+                use-binary-type-for-blob="true"
+                use-order-by-nulls="true">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -586,26 +586,26 @@ access. For a detailed description see the core/docs/entityconfig.html file.
                 pool-maxsize="100"
                 time-between-eviction-runs-millis="600000"/><!-- Be warned that at this date (2009-09-20) the max_connections parameters in postgresql.conf
                     is set by default to 100 by the initdb process see http://www.postgresql.org/docs/8.4/static/runtime-config-connection.html#GUC-MAX-CONNECTIONS-->
-        
+
         <!-- <jndi-jdbc jndi-server-name="default" jndi-name="java:comp/env/jdbc/localpostgres" isolation-level="ReadCommitted"/>-->
         <!-- <jndi-jdbc jndi-server-name="default" jndi-name="comp/env/jdbc/xa/localpostgres" isolation-level="ReadCommitted"/> --> <!-- Orion Style JNDI name -->
         <!-- <jndi-jdbc jndi-server-name="localweblogic" jndi-name="PostgresDataSource"/> --> <!-- Weblogic Style JNDI name -->
         <!-- <jndi-jdbc jndi-server-name="default" jndi-name="jdbc/localpostgres" isolation-level="ReadCommitted"/> --> <!-- JRun4 Style JNDI name -->
         <!-- <tyrex-dataSource dataSource-name="localpostgres" isolation-level="ReadCommitted"/> -->
     </datasource>
-    
+
     <datasource name="localposttenantnew"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="public"
-            field-type-name="postnew"
-            check-on-start="true"
-            add-missing-on-start="true"
-            use-fk-initially-deferred="false"
-            alias-view-columns="false"
-            join-style="ansi"
-            result-fetch-size="50"
-            use-binary-type-for-blob="true"
-            use-order-by-nulls="true">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="public"
+                field-type-name="postnew"
+                check-on-start="true"
+                add-missing-on-start="true"
+                use-fk-initially-deferred="false"
+                alias-view-columns="false"
+                join-style="ansi"
+                result-fetch-size="50"
+                use-binary-type-for-blob="true"
+                use-order-by-nulls="true">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -623,7 +623,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
                 pool-maxsize="100"
                 time-between-eviction-runs-millis="600000"/><!-- Be warned that at this date (2009-09-20) the max_connections parameters in postgresql.conf
                     is set by default to 100 by the initdb process see http://www.postgresql.org/docs/8.4/static/runtime-config-connection.html#GUC-MAX-CONNECTIONS-->
-        
+
         <!-- <jndi-jdbc jndi-server-name="default" jndi-name="java:comp/env/jdbc/localpostgres" isolation-level="ReadCommitted"/>-->
         <!-- <jndi-jdbc jndi-server-name="default" jndi-name="comp/env/jdbc/xa/localpostgres" isolation-level="ReadCommitted"/> --> <!-- Orion Style JNDI name -->
         <!-- <jndi-jdbc jndi-server-name="localweblogic" jndi-name="PostgresDataSource"/> --> <!-- Weblogic Style JNDI name -->
@@ -633,14 +633,14 @@ access. For a detailed description see the core/docs/entityconfig.html file.
 
 
     <datasource name="localoracle"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="OFBIZ"
-            field-type-name="oracle"
-            check-on-start="true"
-            add-missing-on-start="true"
-            alias-view-columns="false"
-            join-style="ansi"
-            use-order-by-nulls="true">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="OFBIZ"
+                field-type-name="oracle"
+                check-on-start="true"
+                add-missing-on-start="true"
+                alias-view-columns="false"
+                join-style="ansi"
+                use-order-by-nulls="true">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -658,13 +658,13 @@ access. For a detailed description see the core/docs/entityconfig.html file.
                 time-between-eviction-runs-millis="600000"/>
     </datasource>
     <datasource name="localoracledd"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="OFBIZ"
-            field-type-name="oracle"
-            check-on-start="true"
-            add-missing-on-start="true"
-            join-style="ansi"
-            use-order-by-nulls="true">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="OFBIZ"
+                field-type-name="oracle"
+                check-on-start="true"
+                add-missing-on-start="true"
+                join-style="ansi"
+                use-order-by-nulls="true">
         <read-data reader-name="main"/>
         <inline-jdbc
                 jdbc-driver="com.ddtek.jdbc.oracle.OracleDriver"
@@ -679,13 +679,13 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     <!-- SCIPIO: 2018-06-05: Removed Sybase DB support -->
 
     <datasource name="localsapdb"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            field-type-name="sapdb"
-            check-on-start="true"
-            add-missing-on-start="true"
-            fk-style="name_fk"
-            use-fk-initially-deferred="false"
-            join-style="ansi-no-parenthesis">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                field-type-name="sapdb"
+                check-on-start="true"
+                add-missing-on-start="true"
+                fk-style="name_fk"
+                use-fk-initially-deferred="false"
+                join-style="ansi-no-parenthesis">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -709,13 +709,13 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     </datasource>
 
     <datasource name="localfirebird"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            field-type-name="firebird"
-            check-on-start="true"
-            use-foreign-key-indices="false"
-            add-missing-on-start="true"
-            alias-view-columns="false"
-            join-style="ansi">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                field-type-name="firebird"
+                check-on-start="true"
+                use-foreign-key-indices="false"
+                add-missing-on-start="true"
+                alias-view-columns="false"
+                join-style="ansi">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -753,14 +753,14 @@ access. For a detailed description see the core/docs/entityconfig.html file.
       http://support.microsoft.com/kb/820773/
     -->
     <datasource name="localmssql"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="dbo"
-            field-type-name="mssql"
-            check-on-start="true"
-            add-missing-on-start="true"
-            join-style="ansi"
-            alias-view-columns="false"
-            use-fk-initially-deferred="false">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="dbo"
+                field-type-name="mssql"
+                check-on-start="true"
+                add-missing-on-start="true"
+                join-style="ansi"
+                alias-view-columns="false"
+                use-fk-initially-deferred="false">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -781,12 +781,12 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     </datasource>
 
     <datasource name="localp6spy"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="public"
-            field-type-name="postgres"
-            check-on-start="true"
-            add-missing-on-start="true"
-            join-style="ansi">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                schema-name="public"
+                field-type-name="postgres"
+                check-on-start="true"
+                add-missing-on-start="true"
+                join-style="ansi">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -807,16 +807,16 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     </datasource>
 
     <datasource name="localadvantage"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            field-type-name="advantage"
-            check-on-start="true"
-            add-missing-on-start="true"
-            check-indices-on-start="false"
-            use-foreign-keys="false"
-            use-foreign-key-indices="true"
-            join-style="ansi-no-parenthesis"
-            alias-view-columns="false"
-            always-use-constraint-keyword="true">
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                field-type-name="advantage"
+                check-on-start="true"
+                add-missing-on-start="true"
+                check-indices-on-start="false"
+                use-foreign-keys="false"
+                use-foreign-key-indices="true"
+                join-style="ansi-no-parenthesis"
+                alias-view-columns="false"
+                always-use-constraint-keyword="true">
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
@@ -834,22 +834,22 @@ access. For a detailed description see the core/docs/entityconfig.html file.
                 pool-maxsize="100"
                 time-between-eviction-runs-millis="600000"/>
     </datasource>
-    
+
     <!-- SCIPIO: 2018-06-05: Added MariaDB support -->
     <!-- List of table-types (storage engine): https://mariadb.com/kb/en/library/choosing-the-right-storage-engine/ -->
     <datasource name="localmariadb"
-            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            field-type-name="mariadb"
-            check-on-start="true"
-            add-missing-on-start="true"
-            check-pks-on-start="false"
-            use-foreign-keys="true"
-            join-style="ansi-no-parenthesis"
-            alias-view-columns="false"
-            drop-fk-use-foreign-key-keyword="true"
-            table-type="InnoDB"
-            character-set="utf8mb4"
-            collate="utf8mb4_general_ci"> <!-- Default character set is latin1_swedish_ci but throws errors with seed data -->
+                helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+                field-type-name="mariadb"
+                check-on-start="true"
+                add-missing-on-start="true"
+                check-pks-on-start="false"
+                use-foreign-keys="true"
+                join-style="ansi-no-parenthesis"
+                alias-view-columns="false"
+                drop-fk-use-foreign-key-keyword="true"
+                table-type="InnoDB"
+                character-set="utf8mb4"
+                collate="utf8mb4_general_ci"> <!-- Default character set is latin1_swedish_ci but throws errors with seed data -->
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>
         <read-data reader-name="seed-initial"/>
